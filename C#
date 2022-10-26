@@ -1,0 +1,60 @@
+        public override void print(Node t, int n, bool p)
+        {
+            if (!p)
+            {
+                var spaces = "";
+                if (n >= 0) spaces = new string(' ', n);
+                Console.Write(spaces + "(if ");
+                if (t.getCdr().getCar().isPair())
+                {
+                    if((t.getCdr().getCar() as Cons).form is If ||
+                        (t.getCdr().getCar() as Cons).form is Lambda ||
+                        (t.getCdr().getCar() as Cons).form is Define)
+                    t.getCdr().getCar().print(n+4, true);
+                    else
+                    {
+                        t.getCdr().getCar().print(0, false);
+                    }
+
+                }
+                else
+                    t.getCdr().getCar().print(0, false);
+                t = t.getCdr().getCdr();
+                do
+                {
+                    Console.WriteLine("");
+                    t.getCar().print(n + 4, false);
+                    t = t.getCdr();
+                } while (t.getCdr() != null);
+                Console.WriteLine("");
+                t.print(n, true);
+            }
+            else
+            {
+                var spaces = "";
+                if (n >= 0) spaces = new string(' ', n);
+                Console.Write("(if ");
+                if (t.getCdr().getCar().isPair())
+                {
+                    if ((t.getCdr().getCar() as Cons).form is If ||
+                        (t.getCdr().getCar() as Cons).form is Lambda ||
+                        (t.getCdr().getCar() as Cons).form is Define)
+                        t.getCdr().getCar().print(n+4, true);
+                    else
+                    {
+                        t.getCdr().getCar().print(0, false);
+                    }
+
+                }
+                t.getCdr().getCar().print(0, false);
+                t = t.getCdr().getCdr();
+                do
+                {
+                    Console.WriteLine("");
+                    t.getCar().print(n + 4, false);
+                    t = t.getCdr();
+                } while (t.getCdr() != null);
+                Console.WriteLine("");
+                t.print(n, true);
+            }
+        }
